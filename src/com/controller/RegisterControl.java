@@ -23,7 +23,6 @@ public class RegisterControl extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String password2 = request.getParameter("password2");
         String role = request.getParameter("role");
         Map<String, String> errors = new HashMap<>();
         Map<String, String> formData = new HashMap<>();
@@ -41,18 +40,10 @@ public class RegisterControl extends HttpServlet {
             errors.put("password", "密码长度不能少于" + MIN_PASSWORD_LENGTH + "位");
         }
 
-        if (password2 == null || password2.trim().isEmpty()) {
-            errors.put("password2", "确认密码不能为空");
-        }
-
-        // 4. 密码一致性校验
-        if (password != null && password2 != null && !password.equals(password2)) {
-            errors.put("password2", "两次密码不一致");
-        }
-
         String json;
         if (!errors.isEmpty()) {
-            json = "{\"success\": false, \"message\": \"注册信息有误，请检查\"}";
+            // 打印error内容
+            json = "{\"success\": false, \"message\": \"注册信息有误： " + errors + "\"}";
         } else {
             Person person = new Person();
             person.setUsername(username);

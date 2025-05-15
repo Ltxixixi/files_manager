@@ -287,9 +287,6 @@
             <c:when test="${not empty sessionScope.person}">
                 <span>欢迎, ${sessionScope.person.username}</span>
                 <div class="auth-buttons">
-                    <c:if test="${not empty sessionScope.person && sessionScope.person.role == '管理员'}">
-                        <a href="viewReports" class="action-btn">查看所有举报</a>
-                    </c:if>
                     <a href="logout.jsp" class="logout-btn">退出登录</a>
                 </div>
             </c:when>
@@ -306,14 +303,12 @@
 
 <div class="container">
     <h2>文件列表
-
         <c:if test="${not empty sessionScope.person}">
             <c:if test="${sessionScope.person.role == '管理员'}">
-                <a href="viewReports" class="action_reports-btn style="float: right">查看所有举报</a>
+                <a href="viewReports" class="action_reports-btn" style="float: right;margin-left: 15px;">查看举报</a>
             </c:if>
-            <a href="javascript:void(0)" onclick="showUploadModal()" class="upload-btn" style="float: right; margin-top: -5px;">上传文件</a>
+            <a href="javascript:void(0)" onclick="showUploadModal()" class="upload-btn" style="float: right; ">上传文件</a>
         </c:if>
-
     </h2>
     <div id="fileTableContainer">
         <table id="fileTable">
@@ -353,9 +348,6 @@
             <button class="cancel-btn" onclick="hideModal('loginModal')">取消</button>
             <button class="submit-btn" onclick="login()">登录</button>
         </div>
-        <div class="switch-form">
-            还没有账号？<a onclick="switchToRegister()">立即注册</a>
-        </div>
     </div>
 </div>
 
@@ -383,9 +375,6 @@
         <div class="modal-buttons">
             <button class="cancel-btn" onclick="hideModal('registerModal')">取消</button>
             <button class="submit-btn" onclick="register()">注册</button>
-        </div>
-        <div class="switch-form">
-            已有账号？<a onclick="switchToLogin()">立即登录</a>
         </div>
     </div>
 </div>

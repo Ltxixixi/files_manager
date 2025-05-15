@@ -108,7 +108,7 @@
         <tbody>
         <c:forEach items="${reports}" var="report">
             <tr>
-                <td>${ireport.d}</td>
+                <td>${report.id}</td>
                 <td>${report.file.filename}</td>
                 <td>${report.reporter_id}</td>
                 <td>${report.reason}</td>
