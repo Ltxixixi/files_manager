@@ -415,12 +415,11 @@
             <div id="uploadFileError" class="error-message"></div>
         </div>
         <div class="form-group">
-            <div>
-                <input type="radio" id="publicFile" name="filePermission" value="Y" checked>
-                <label for="publicFile">公开</label>
-                <input type="radio" id="privateFile" name="filePermission" value="N">
-                <label for="privateFile">私有</label>
-            </div>
+            <label for="filePermission">文件权限</label>
+            <select id="filePermission" name="filePermission">
+                <option value="Y" selected>公开</option>
+                <option value="N">私有</option>
+            </select>
         </div>
         <div class="modal-buttons">
             <button class="cancel-btn" onclick="hideModal('uploadModal')">取消</button>
@@ -431,9 +430,8 @@
 
 
 <script>
-    // 全局变量
     var currentPage = 1;
-    var pageSize = 10;
+    var pageSize = 5;
     var totalCount = 0;
 
     // 加载文件列表
@@ -638,7 +636,7 @@
     function downloadFile(fileId, filename) {
         // 显示下载中状态
         var $downloadBtns = $(".download-btn");
-        $downloadBtns.prop("disabled", true).text("下载中...");
+        $downloadBtns.prop("disabled", true).text("下载中");
 
         // 创建隐藏的iframe来实现文件下载
         var iframe = document.createElement("iframe");
@@ -679,7 +677,7 @@
     function uploadFile() {
         var fileInput = document.getElementById("uploadFile");
         var file = fileInput.files[0];
-        var isPublic = $("input[name='filePermission']:checked").val();
+        var isPublic =document.getElementById("filePermission").value;
 
         if (!file) {
             $("#uploadFileError").text("请选择文件").show();
@@ -777,13 +775,9 @@
             $("#loginPasswordError").text("请输入密码").show();
             return;
         }
-
-        $.ajax({
-            url: "login",
-            type: "POST",
-            data: { username: username, password: password },
-            dataType: "json",
-            success: function (response) {
+        $.post("login",
+            {username: username, password: password},
+            function (response) {
                 if (response.success) {
                     hideModal("loginModal");
                     location.reload(); // 刷新页面更新登录状态
@@ -791,12 +785,10 @@
                     $("#loginPasswordError").text(response.message).show();
                 }
             },
-            error: function () {
-                $("#loginPasswordError").text("登录失败，请稍后重试").show();
-            }
+            "json").fail(function () {
+            $("#loginPasswordError").text("登录失败，请稍后重试").show();
         });
     }
-
     // 注册功能
     function register() {
         var username = $("#registerUsername").val().trim();
@@ -816,24 +808,20 @@
             $("#registerPasswordError").text("密码长度不能少于6位").show();
             return;
         }
-
-        $.ajax({
-            url: "register",
-            type: "POST",
-            data: { username: username, password: password,role: role },
-            dataType: "json",
-            success: function (response) {
+        $.post("register",
+            { username: username, password: password, role: role },
+            function(response) {
                 if (response.success) {
                     alert(response.message);
                     hideModal("registerModal");
                     showLoginModal();
                 } else {
-                    $("#registerUsernameError").text(response.message).show();
+                    $("#registerPasswordError").text(response.message).show();
                 }
             },
-            error: function () {
-                $("#registerUsernameError").text("注册失败，请稍后重试").show();
-            }
+            "json"
+        ).fail(function() {
+            $("#registerPasswordError").text("注册失败，请稍后重试").show();
         });
     }
 
