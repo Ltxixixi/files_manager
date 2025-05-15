@@ -13,5 +13,5 @@ public interface IFileDao {
     public void incrementDownloadCount(int fileId)throws SQLException, ClassNotFoundException;
     public boolean blockFile(int fileId)throws SQLException, ClassNotFoundException;
     public List<File> getUserFiles(int userId, int page, int pageSize)throws SQLException, ClassNotFoundException;
-
+    public boolean deleteFile(int fileId) throws SQLException, ClassNotFoundException;
 }

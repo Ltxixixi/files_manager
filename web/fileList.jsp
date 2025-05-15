@@ -87,26 +87,32 @@
         #fileTable th:nth-child(1),
         #fileTable td:nth-child(1) {
             width: 20%; /* 文件名列 */
+            text-align: center;
         }
         #fileTable th:nth-child(2),
         #fileTable td:nth-child(2) {
             width: 40%; /* 类型列 - 固定宽度 */
+            text-align: center;
         }
         #fileTable th:nth-child(3),
         #fileTable td:nth-child(3) {
-            width: 10%; /* 大小列 */
+            width: 8%; /* 大小列 */
+            text-align: center;
         }
         #fileTable th:nth-child(4),
         #fileTable td:nth-child(4) {
-            width: 10%; /* 下载次数列 */
+            width: 8%; /* 下载次数列 */
+            text-align: center;
         }
         #fileTable th:nth-child(5),
         #fileTable td:nth-child(5) {
-            width: 10%; /* 状态列 */
+            width: 8%; /* 状态列 */
+            text-align: center;
         }
         #fileTable th:nth-child(6),
         #fileTable td:nth-child(6) {
-            width: 15%; /* 操作列 */
+            width: 20%; /* 操作列 */
+            text-align: center;
         }
         tr:nth-child(even) {
             background-color: #f9f9f9;
@@ -150,6 +156,9 @@
         }
         .report-btn {
             background-color: #42A5F5; 
+        }
+        .delete-btn {
+            background-color: #f4695f;
         }
         .no-access {
             color: #999;
@@ -519,10 +528,23 @@
                         }));
                 }
                 </c:if>
-
+                // 删除按钮
+            var canDeleted = !isBlocked && ${not empty sessionScope.person};
+            if (canDeleted) {
+                $actions.append($("<a>")
+                    .addClass("action-btn delete-btn")
+                    .attr("href", "#")
+                    .text("删除")
+                    .click(function(e) {
+                        e.preventDefault();
+                        deleteFile(file.id, file.filename);
+                        return false;
+                    }));
+            } 
                 $tr.append($actions);
                 $tbody.append($tr);
             });
+
 
             renderPagination(page);
             console.log("第", page, "页文件列表加载完成");
@@ -637,6 +659,19 @@
         }, 1000); // 3秒后假设下载完成
     }
 
+    // 删除文件函数
+    function deleteFile(fileId, filename) {
+        if (confirm("确定要删除文件 '" + filename + "' 吗？")) {
+            $.post("deleteFile", {fileId: fileId}, function (response) {
+                if (response.success) {
+                    alert("文件删除成功");
+                    loadFiles(currentPage);
+                } else {
+                    alert("文件删除失败: " + response.message);
+                }
+            }, "json");
+        }
+    }
 
 
 

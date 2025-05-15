@@ -162,7 +162,16 @@ public class FileDao implements IFileDao {
         connection.close();
         return files;
     }
-
+    public boolean deleteFile(int fileId) throws SQLException, ClassNotFoundException {
+        Connection connection = new DBConnection().getConnection();
+        String sql = "DELETE FROM file WHERE id = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, fileId);
+        int rowsAffected = statement.executeUpdate();
+        statement.close();
+        connection.close();
+        return rowsAffected > 0;
+    }
     private File extractFileFromResultSet(ResultSet rs) throws SQLException {
         File file = new File();
         file.setId(rs.getInt("id"));

@@ -13,5 +13,5 @@ public interface IFileService {
     public boolean blockFile(int fileId) throws SQLException, ClassNotFoundException;
     public List<File> getUserFiles(int userId, int page, int pageSize) throws SQLException, ClassNotFoundException;
     public int insert(File file) throws SQLException, ClassNotFoundException;
-
+    public boolean deleteFile(int fileId) throws SQLException, ClassNotFoundException;
 }

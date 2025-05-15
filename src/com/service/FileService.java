@@ -49,6 +49,11 @@ public class FileService implements IFileService{
         IFileDao dao = new FileDao();
         return dao.getUserFiles(userId, page, pageSize);
     }
+    @Override
+    public boolean deleteFile(int fileId) throws SQLException, ClassNotFoundException {
+        IFileDao dao = new FileDao();
+        return dao.deleteFile(fileId);
+    }
 
 
 }
