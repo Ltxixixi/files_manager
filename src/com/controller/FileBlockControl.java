@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/blockFile")
-public class BlockFileControl extends HttpServlet {
+@WebServlet("/fileBlock")
+public class FileBlockControl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 检查用户是否是管理员
         request.setCharacterEncoding("UTF-8");

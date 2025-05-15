@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(name = "RegisterControl", urlPatterns = "/register")
+@WebServlet( urlPatterns = "/register")
 public class RegisterControl extends HttpServlet {
     private static final int MIN_PASSWORD_LENGTH = 6;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
