@@ -14,8 +14,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet(name = "RegisterServlet", urlPatterns = "/register")
-public class RegisterServlet extends HttpServlet {
+@WebServlet(name = "RegisterControl", urlPatterns = "/register")
+public class RegisterControl extends HttpServlet {
     private static final int MIN_PASSWORD_LENGTH = 6;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");

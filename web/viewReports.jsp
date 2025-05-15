@@ -117,7 +117,7 @@
                     <a href="fileDownload?fileId=${report.file_id}" class="action-btn ">下载文件</a>
                     <a href="blockFile?fileId=${report.file_id}&reportId=${report.id}" class="action-btn">封存文件</a>
                     <c:if test="${report.status eq '待处理'}">
-                        <a href="resolveReport?reportId=${report.id}" class="action-btn">标记为已处理</a>
+                        <a href="/reportResolve?reportId=${report.id}" class="action-btn">标记为已处理</a>
                     </c:if>
                 </td>
             </tr>

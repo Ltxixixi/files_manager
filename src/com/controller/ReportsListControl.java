@@ -1,10 +1,12 @@
 package com.controller;
-
 import com.dao.FileDao;
 import com.dao.IFileDao;
+import com.dao.IReportsDao;
+
+import com.dao.ReportsDao;
+import com.entity.File;
 import com.entity.Person;
-import com.service.IReportsService;
-import com.service.ReportsService;
+import com.entity.Reports;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,30 +15,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
-@WebServlet("/blockFile")
-public class BlockFileServlet extends HttpServlet {
+@WebServlet("/viewReports")
+public class ReportsListControl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 检查用户是否是管理员
+        // 设置请求和响应的编码为UTF-8
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=UTF-8");
+        // 获取当前用户信息：
         Person person = (Person) request.getSession().getAttribute("person");
 
-        int fileId = Integer.parseInt(request.getParameter("fileId"));
-        int reportId = Integer.parseInt(request.getParameter("reportId"));
-
+        IReportsDao reportDao = new ReportsDao();
         IFileDao fileDao = new FileDao();
-        IReportsService reportDao = new ReportsService();
 
         try {
-            // 封存文件
-            fileDao.blockFile(fileId);
+            // 获取所有举报记录
+            List<Reports> reports = reportDao.getAllReports();
 
-            // 更新举报状态
-            reportDao.updateReportStatus(reportId, "已处理-文件已封存");
+            // 为每个举报记录关联文件信息
+            for (Reports report : reports) {
+                File file = fileDao.getFileById(Integer.parseInt(report.getFile_id()));
+                report.setFile(file);
+            }
 
-            // 返回举报管理页面
-            response.sendRedirect("viewReports");
+            request.setAttribute("reports", reports);
+            request.getRequestDispatcher("viewReports.jsp").forward(request, response);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "数据库错误");

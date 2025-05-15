@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @WebServlet("/fileUpload")
 @MultipartConfig(maxFileSize = 10 * 1024 * 1024, maxRequestSize = 20 * 1024 * 1024)
-public class FileUploadServlet extends HttpServlet {
+public class FileUploadControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=UTF-8");

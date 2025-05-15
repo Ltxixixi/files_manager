@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 
-@WebServlet(name = "ReportHandleServlet", urlPatterns = "/handleReport")
-public class ReportHandleServlet extends HttpServlet {
+@WebServlet(name = "ReportHandleControl", urlPatterns = "/handleReport")
+public class ReportHandleControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=UTF-8");

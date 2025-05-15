@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @WebServlet("/fileList")
-public class FileListServlet extends HttpServlet {
+public class FileListControl extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 设置响应内容类型和字符编码
         request.setCharacterEncoding("UTF-8");
